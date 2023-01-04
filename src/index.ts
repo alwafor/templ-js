@@ -1,21 +1,12 @@
 import fs from "fs/promises";
 import path from "path";
+import { POSSIBLE_ARGS } from "./constants";
+import { Args } from "./types";
 
 interface IFileData {
   name: string;
   content: string;
 }
-
-const POSSIBLE_ARGS = [
-  "--template",
-  "--remove-template",
-  "--create",
-  "--replacers",
-] as const;
-
-type Args = {
-  [key in typeof POSSIBLE_ARGS[number]]?: string;
-};
 
 function getArgsFromCLI() {
   const rawArgs = process.argv.slice(2);
@@ -27,7 +18,8 @@ function getArgsFromCLI() {
   for (let i = 0; i < rawArgs.length; ++i) {
     if (isArgumentParsingNow) {
       if (rawArgs[i].startsWith("-")) {
-        throw new Error(`It's not possible to use template options as values`);
+        console.error(`It's not possible to use template options as values`);
+        process.exit();
       }
       args[argumentKey as keyof Args] = rawArgs[i];
       isArgumentParsingNow = false;
@@ -40,18 +32,24 @@ function getArgsFromCLI() {
   }
 
   if (isArgumentParsingNow) {
-    throw new Error(`You have not provided value for ${argumentKey}!`);
+    console.error(`You have not provided value for ${argumentKey}!`);
+    process.exit();
   }
 
   return args;
 }
 
-function executeOperation(args: Args) {}
+function executeOperation(args: Args) {
+  if (args["--create"]) {
+  }
+}
 
 async function main() {
   const args = getArgsFromCLI();
   const result = executeOperation(args);
+}
 
+async function oldMain() {
   const templateName = process.argv
     .slice(2)
     .find((s) => s.startsWith("--template="))
