@@ -1,0 +1,19 @@
+{
+  "name": "cli-templates",
+  "version": "1.0.0",
+  "description": "CLI tool for creating template files",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "templ": "./dist/index.js"
+  },
+  "keywords": [],
+  "author": "alwafor1@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.2",
+    "typescript": "^4.8.4"
+  }
+}
